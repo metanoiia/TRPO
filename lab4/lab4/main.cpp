@@ -9,7 +9,7 @@ class CaseChanger
 public:
     T operator()( T& t )
     {
-        if(typeid ( t ) != typeid ('c') )
+        if(typeid ( t ) != typeid (char) )
             throw std::exception();
         else
         {
@@ -25,8 +25,7 @@ public:
 int main()
 {
     std::list < char > charList = {'H', 'e', 'l', 'l', 'o', ' ', 't', 'h', 'e', 'r', 'e'};
-
-    CaseChanger <char> cc;
+    CaseChanger < char > cc;
 
     for( const char & c : charList )
         std::cout << c;
