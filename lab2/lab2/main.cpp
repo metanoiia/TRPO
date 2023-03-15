@@ -4,16 +4,29 @@
 #include <algorithm>
 #include <numeric>
 #include <sstream>
+#include <list>
 
-bool isPalindrome( std::string s )
+template < typename T >
+class IsPalindrome
 {
-    for( size_t i = 0; i < s.length() / 2; i++ )
+public:
+    bool operator()( const T & t )
     {
-        if( s.at( i ) != s.at( s.length() - 1 - i ) )
-            return false;
+        std::string strT;
+
+        if constexpr( std::is_same< std::string, T >::value )
+            strT = t;
+        else
+            strT  = std::to_string( t );
+
+        std::string strCopy = strT;
+
+        std::reverse( strT.begin(), strT.end() );
+
+        return strCopy == strT;
     }
-    return true;
-}
+};
+
 
 void task1()
 {
@@ -60,8 +73,10 @@ void task2( )
     std::string word;
     size_t num = 0;
 
+    IsPalindrome< std::string > isPal;
+
     while( std::getline( ss, word, ' ' ) )
-        if( isPalindrome( word ) )
+        if( isPal( word ) )
             num++;
 
     std::cout << "quantity of palindromes: " << num << std:: endl;
